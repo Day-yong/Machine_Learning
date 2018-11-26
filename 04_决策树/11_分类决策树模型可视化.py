@@ -83,29 +83,29 @@ print ("原始数据各个特征属性的缩放数据值(max - min):",ss.scale_)
 k 默认为10，如果指定了，那么就会返回你所想要的特征的个数
 """
 
-ch2 = SelectKBest(chi2, k=3)  # 创建卡方系数模型
-X_train = ch2.fit_transform(X_train, Y_train)  # 训练模型，并转换
-X_test = ch2.transform(X_test)  # 在训练好的模型下转换
-select_name_index = ch2.get_support(indices=True)
-print ("对类别判断影响最大的三个特征属性分布是:",ch2.get_support(indices=False))
+# ch2 = SelectKBest(chi2, k=3)  # 创建卡方系数模型
+# X_train = ch2.fit_transform(X_train, Y_train)  # 训练模型，并转换
+# X_test = ch2.transform(X_test)  # 在训练好的模型下转换
+# select_name_index = ch2.get_support(indices=True)
+# print ("对类别判断影响最大的三个特征属性分布是:",ch2.get_support(indices=False))
 
 
-## c.降维
-"""
-降维：
-因为对于数据而言，如果特征属性比较多，在构建过程中，会比较复杂，这个时候考虑将多维（高维）映射到低维的数据
-常用方法：
-	PCA：主成分分析（无监督）
-	LDA：线性判别分析（有监督）
-"""
-pca = PCA(n_components = 2) # 构建一个pca模型对象，设置最终维度是2维
-# 这里是为了后面画图方便，所以将数据维度设置了2维，一般用默认不设置参数就可以
-X_train = pca.fit_transform(X_train)  # 训练模型并转换
-X_test = pca.transform(X_test)  # 转换
+# ## c.降维
+# """
+# 降维：
+# 因为对于数据而言，如果特征属性比较多，在构建过程中，会比较复杂，这个时候考虑将多维（高维）映射到低维的数据
+# 常用方法：
+# 	PCA：主成分分析（无监督）
+# 	LDA：线性判别分析（有监督）
+# """
+# pca = PCA(n_components = 2) # 构建一个pca模型对象，设置最终维度是2维
+# # 这里是为了后面画图方便，所以将数据维度设置了2维，一般用默认不设置参数就可以
+# X_train = pca.fit_transform(X_train)  # 训练模型并转换
+# X_test = pca.transform(X_test)  # 转换
 
 
 # 5.模型构建
-model = DecisionTreeClassifier(criterion='entropy', random_state=0, min_samples_split=10)  # 另外也可选gini, min_samples_split剪枝操作
+model = DecisionTreeClassifier(criterion='entropy', random_state=0, min_samples_split=2)  # 另外也可选gini, min_samples_split剪枝操作
 # 模型训练
 model.fit(X_train, Y_train)
 # 模型预测
@@ -134,26 +134,27 @@ print ("Classes:", model.classes_)  # 类别
 
 # 7.模型可视化
 ## a.方式一：输出形成dot文件，然后使用graphviz的dot命令将dot文件转换为pdf
-from sklearn import tree
-with open('iris.dot', 'w') as f:
-    # 将模型model输出到给定的文件中
-    f = tree.export_graphviz(model, out_file=f)
-# 命令行执行dot命令： dot -Tpdf iris.dot -o iris.pdf
+# from sklearn import tree
+# with open('iris.dot', 'w') as f:
+#     # 将模型model输出到给定的文件中
+#     f = tree.export_graphviz(model, out_file=f)
+# # 命令行执行dot命令： dot -Tpdf iris.dot -o iris.pdf
 
 ## b.方式二：直接使用pydotplus插件生成pdf文件 pip install pydotplus
-from sklearn import tree
-import pydotplus 
-dot_data = tree.export_graphviz(model, out_file=None) 
-graph = pydotplus.graph_from_dot_data(dot_data) 
-graph.write_pdf("iris2.pdf") 
-#graph.write_png("0.png")
+# from sklearn import tree
+# import pydotplus 
+# dot_data = tree.export_graphviz(model, out_file=None) 
+# graph = pydotplus.graph_from_dot_data(dot_data) 
+# graph.write_pdf("iris1.pdf") 
 
-## c.方式三：直接生成图片
+
+# ## c.方式三：直接生成图片(这里加了特征和标签，所以需要将前面的特征选择和降维去掉，不然特征数目不对应)
 from sklearn import tree
-from IPython.display import Image
 import pydotplus
-dot_data = tree.export_graphviz(model, out_file=None, 
-                         filled=True, rounded=True,  
-                         special_characters=True)  
+dot_data = tree.export_graphviz(model, out_file=None,
+						feature_names=['sepal length', 'sepal width', 'petal length', 'petal width'],  
+                        class_names=['Iris-setosa', 'Iris-versicolor', 'Iris-virginica'], 
+                        filled=True, rounded=True,  
+                        special_characters=True)  
 graph = pydotplus.graph_from_dot_data(dot_data)  
-graph.write_png("iris.png")
+graph.write_png("iris2.png")

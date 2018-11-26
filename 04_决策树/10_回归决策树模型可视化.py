@@ -67,7 +67,6 @@ print ("Score：", dtr_score)
 
 # 7.可视化模型：直接生成图片
 from sklearn import tree
-from IPython.display import Image  
 import pydotplus
 dot_data = tree.export_graphviz(dtr, out_file=None,  
                          filled=True, rounded=True,  
