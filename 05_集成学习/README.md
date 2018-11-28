@@ -36,3 +36,19 @@
 本案例基于波士顿房屋租赁数据，比较`线性回归(LinearRegression)`和使用`Bagging` 集成线性回归：
 
 代码可见：`04_Bagging思想应用于回归模型.py`
+
+
+## 集成学习之`Bossting`思想
+
+### 1、`Adaboost`分类算法
+
+- 05_Adaboost分类算法.py
+- 此示例将 `AdaBoosted` 决策树桩拟合到由两个“高斯分位数” 聚类组成的非线性可分类分类数据集，并绘制决策边界和决策分数
+
+### 2、`Adaboost`参数`algorithm`取值比较
+
+- 06_Adaboost参数algorithm取值比较.py
+- 本案例通过更改参数`algorithm`的取值比较`"ASMME"`和`"SAMME.R"` 的收敛速度，错误率
+
+
+### 3、

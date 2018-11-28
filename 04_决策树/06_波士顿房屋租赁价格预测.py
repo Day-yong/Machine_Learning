@@ -19,9 +19,6 @@ mpl.rcParams['font.sans-serif']=[u'simHei']
 mpl.rcParams['axes.unicode_minus']=False
 # 拦截异常
 warnings.filterwarnings(action = 'ignore', category=ConvergenceWarning)
-# 用于预处理数据
-def notEmpty(s):
-    return s != ''
 
 # 1.读取数据
 names = ['CRIM','ZN', 'INDUS','CHAS','NOX','RM','AGE','DIS','RAD','TAX','PTRATIO','B','LSTAT']
@@ -32,6 +29,9 @@ fd = pd.read_csv(path, header = None)  # header = None表示没有数据对应�
 
 # 2.数据处理
 data = np.empty((len(fd), 14))  # 生成形状为[len(fd), 14]的空数组
+# 用于预处理数据
+def notEmpty(s):
+    return s != ''
 # 对每条记录依次处理
 for i, d in enumerate(fd.values):  # enumerate生成一列索引i(表示fd中的每一条记录), d为其元素(此处d就是fd的一条记录内容)
     d = map(float, filter(notEmpty, d[0].split(' '))) # filter一个函数，一个list
