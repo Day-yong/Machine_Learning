@@ -20,6 +20,12 @@
 - 03_K-means聚类应用2.py
 
 
+#### 4、案例4：`二分K-means`算法实现
+
+- 本案例按照算法流程，使用欧氏距离实现 `二分K-means` 算法，并通过文本数据进行训练，具体内容可见代码注释
+- 04_二分K-means算法实现.py
+
+
 ### 二、`Mini Batch KMeans` 算法
 
 #### 4、K-Means算法和Mini Batch K-Means算法比较
