@@ -10,7 +10,7 @@ from scipy import misc
 from sklearn.cluster import KMeans  # KMeans模型
 from sklearn.metrics import pairwise_distances_argmin # 计算点与点直接的最小距离，然后将最小距离的点组成一个key/value的键值对
 from sklearn.datasets import load_sample_image
-from sklearn.utils import shuffle
+from sklearn.utils import shuffle  # 随机排序
 
 
 # 解决展示的时候中文乱码
